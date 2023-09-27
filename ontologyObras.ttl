@@ -1,0 +1,593 @@
+@prefix : <http://example.com#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gufo: <http://purl.org/nemo/gufo#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://example.com#> .
+
+<http://example.com> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://example.com#estaLocalizada
+:estaLocalizada rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain :Obra ;
+                rdfs:range :Localizacao .
+
+
+###  http://example.com#financia
+:financia rdf:type owl:ObjectProperty ,
+                   owl:InverseFunctionalProperty ;
+          rdfs:domain :Parlamentar ;
+          rdfs:range :Obra .
+
+
+###  http://example.com#gerencia
+:gerencia rdf:type owl:ObjectProperty ,
+                   owl:InverseFunctionalProperty ;
+          rdfs:domain :Orgao ;
+          rdfs:range :Obra .
+
+
+###  http://purl.org/nemo/gufo#inheresIn
+gufo:inheresIn rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/nemo/gufo#mediates
+gufo:mediates rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://example.com#temCausaParalisacao
+:temCausaParalisacao rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf owl:topDataProperty ;
+                     rdfs:domain :Paralisada ;
+                     rdfs:range xsd:string .
+
+
+###  http://example.com#temDataParalisacao
+:temDataParalisacao rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :Paralisada ;
+                    rdfs:range xsd:dateTime .
+
+
+###  http://example.com#temEmpreendimento
+:temEmpreendimento rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :Obra ;
+                   rdfs:range xsd:string .
+
+
+###  http://example.com#temExecucaoFinanceira
+:temExecucaoFinanceira rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf owl:topDataProperty ;
+                       rdfs:domain :Obra ;
+                       rdfs:range xsd:double .
+
+
+###  http://example.com#temExecucaoFisica
+:temExecucaoFisica rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :Obra ;
+                   rdfs:range xsd:double .
+
+
+###  http://example.com#temValorDesbloqueado
+:temValorDesbloqueado rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf owl:topDataProperty ;
+                      rdfs:domain :Obra ;
+                      rdfs:range xsd:double .
+
+
+###  http://example.com#temValorInvestimento
+:temValorInvestimento rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf owl:topDataProperty ;
+                      rdfs:domain :Obra ;
+                      rdfs:range xsd:double .
+
+
+###  http://example.com#temVigenciaFim
+:temVigenciaFim rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdf:type owl:FunctionalProperty ;
+                rdfs:domain :Obra ;
+                rdfs:range xsd:integer .
+
+
+###  http://example.com#temVigenciaInicio
+:temVigenciaInicio rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdf:type owl:FunctionalProperty ;
+                   rdfs:domain :Obra ;
+                   rdfs:range xsd:integer .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://example.com#Abandonada
+:Abandonada rdf:type owl:Class ;
+            rdfs:subClassOf :Obra .
+
+
+###  http://example.com#Atrasada
+:Atrasada rdf:type owl:Class ;
+          rdfs:subClassOf :Obra .
+
+
+###  http://example.com#CausaDaParalisacao
+:CausaDaParalisacao rdf:type owl:Class ;
+                    rdfs:subClassOf gufo:Quality ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty gufo:inheresIn ;
+                                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Paralisada
+                                    ] .
+
+
+###  http://example.com#Concluida
+:Concluida rdf:type owl:Class ;
+           rdfs:subClassOf :Obra .
+
+
+###  http://example.com#DataDaParalisacao
+:DataDaParalisacao rdf:type owl:Class ;
+                   rdfs:subClassOf gufo:Quality ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty gufo:inheresIn ;
+                                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onClass :Paralisada
+                                   ] .
+
+
+###  http://example.com#EmAndamento
+:EmAndamento rdf:type owl:Class ;
+             rdfs:subClassOf :Obra .
+
+
+###  http://example.com#Empreendimento
+:Empreendimento rdf:type owl:Class ;
+                rdfs:subClassOf gufo:Quality ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                                 ] ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :Obra
+                                ] .
+
+
+###  http://example.com#ExecucaoFinanceira
+:ExecucaoFinanceira rdf:type owl:Class ;
+                    rdfs:subClassOf gufo:Quality ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                                     ] ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onClass :Obra
+                                    ] .
+
+
+###  http://example.com#ExecucaoFisica
+:ExecucaoFisica rdf:type owl:Class ;
+                rdfs:subClassOf gufo:Quality ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                                 ] ;
+                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                  owl:onClass :Obra
+                                ] .
+
+
+###  http://example.com#Fim
+:Fim rdf:type owl:Class ;
+     rdfs:subClassOf :Vigencia .
+
+
+###  http://example.com#Gestao
+:Gestao rdf:type owl:Class ;
+        rdfs:subClassOf gufo:Relator ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty gufo:mediates ;
+                          owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onClass :Obra
+                        ] ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty gufo:mediates ;
+                          owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onClass :Orgao
+                        ] .
+
+
+###  http://example.com#Inicio
+:Inicio rdf:type owl:Class ;
+        rdfs:subClassOf :Vigencia .
+
+
+###  http://example.com#Localizacao
+:Localizacao rdf:type owl:Class ;
+             rdfs:subClassOf gufo:FunctionalComplex .
+
+
+###  http://example.com#Municipio
+:Municipio rdf:type owl:Class ;
+           rdfs:subClassOf :Localizacao .
+
+
+###  http://example.com#Obra
+:Obra rdf:type owl:Class ;
+      rdfs:subClassOf gufo:FunctionalComplex ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty [ owl:inverseOf gufo:mediates
+                                       ] ;
+                        owl:someValuesFrom :Gestao
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty gufo:inheresIn ;
+                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :Empreendimento
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty gufo:inheresIn ;
+                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :ExecucaoFinanceira
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty gufo:inheresIn ;
+                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :ExecucaoFisica
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty gufo:inheresIn ;
+                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :ValorDesbloqueado
+                      ] ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty gufo:inheresIn ;
+                        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                        owl:onClass :ValorInvestimento
+                      ] .
+
+
+###  http://example.com#Orgao
+:Orgao rdf:type owl:Class ;
+       rdfs:subClassOf gufo:FunctionalComplex ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf gufo:mediates
+                                        ] ;
+                         owl:someValuesFrom :Gestao
+                       ] .
+
+
+###  http://example.com#Paralisada
+:Paralisada rdf:type owl:Class ;
+            rdfs:subClassOf :Obra ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                             ] ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :CausaDaParalisacao
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                             ] ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onClass :DataDaParalisacao
+                            ] .
+
+
+###  http://example.com#Parlamentar
+:Parlamentar rdf:type owl:Class ;
+             rdfs:subClassOf gufo:FunctionalComplex .
+
+
+###  http://example.com#SobOrcamento
+:SobOrcamento rdf:type owl:Class ;
+              rdfs:subClassOf :Obra .
+
+
+###  http://example.com#Superfaturada
+:Superfaturada rdf:type owl:Class ;
+               rdfs:subClassOf :Obra .
+
+
+###  http://example.com#UF
+:UF rdf:type owl:Class ;
+    rdfs:subClassOf :Localizacao .
+
+
+###  http://example.com#ValorDesbloqueado
+:ValorDesbloqueado rdf:type owl:Class ;
+                   rdfs:subClassOf gufo:Quality ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                                    ] ;
+                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onClass :Obra
+                                   ] .
+
+
+###  http://example.com#ValorInvestimento
+:ValorInvestimento rdf:type owl:Class ;
+                   rdfs:subClassOf gufo:Quality ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                                    ] ;
+                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onClass :Obra
+                                   ] .
+
+
+###  http://example.com#Vigencia
+:Vigencia rdf:type owl:Class ;
+          rdfs:subClassOf gufo:Quality ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty [ owl:inverseOf gufo:inheresIn
+                                           ] ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :Obra
+                          ] .
+
+
+###  http://purl.org/nemo/gufo#FunctionalComplex
+gufo:FunctionalComplex rdf:type owl:Class .
+
+
+###  http://purl.org/nemo/gufo#Kind
+gufo:Kind rdf:type owl:Class .
+
+
+###  http://purl.org/nemo/gufo#MaterialRelationshipType
+gufo:MaterialRelationshipType rdf:type owl:Class .
+
+
+###  http://purl.org/nemo/gufo#Phase
+gufo:Phase rdf:type owl:Class .
+
+
+###  http://purl.org/nemo/gufo#Quality
+gufo:Quality rdf:type owl:Class .
+
+
+###  http://purl.org/nemo/gufo#Relator
+gufo:Relator rdf:type owl:Class .
+
+
+###  http://purl.org/nemo/gufo#SubKind
+gufo:SubKind rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://example.com#Abandonada
+:Abandonada rdf:type owl:NamedIndividual ,
+                     gufo:Phase .
+
+
+###  http://example.com#Atrasada
+:Atrasada rdf:type owl:NamedIndividual ,
+                   gufo:Phase .
+
+
+###  http://example.com#CausaDaParalisacao
+:CausaDaParalisacao rdf:type owl:NamedIndividual ,
+                             gufo:Kind .
+
+
+###  http://example.com#Concluida
+:Concluida rdf:type owl:NamedIndividual ,
+                    gufo:Phase .
+
+
+###  http://example.com#DataDaParalisacao
+:DataDaParalisacao rdf:type owl:NamedIndividual ,
+                            gufo:Kind .
+
+
+###  http://example.com#EmAndamento
+:EmAndamento rdf:type owl:NamedIndividual ,
+                      gufo:Phase .
+
+
+###  http://example.com#Empreendimento
+:Empreendimento rdf:type owl:NamedIndividual ,
+                         gufo:Kind .
+
+
+###  http://example.com#ExecucaoFinanceira
+:ExecucaoFinanceira rdf:type owl:NamedIndividual ,
+                             gufo:Kind .
+
+
+###  http://example.com#ExecucaoFisica
+:ExecucaoFisica rdf:type owl:NamedIndividual ,
+                         gufo:Kind .
+
+
+###  http://example.com#Fim
+:Fim rdf:type owl:NamedIndividual ,
+              gufo:SubKind .
+
+
+###  http://example.com#Gestao
+:Gestao rdf:type owl:NamedIndividual ,
+                 gufo:Kind .
+
+
+###  http://example.com#Inicio
+:Inicio rdf:type owl:NamedIndividual ,
+                 gufo:SubKind .
+
+
+###  http://example.com#Localizacao
+:Localizacao rdf:type owl:NamedIndividual ,
+                      gufo:Kind .
+
+
+###  http://example.com#Municipio
+:Municipio rdf:type owl:NamedIndividual ,
+                    gufo:SubKind .
+
+
+###  http://example.com#Obra
+:Obra rdf:type owl:NamedIndividual ,
+               gufo:Kind .
+
+
+###  http://example.com#Orgao
+:Orgao rdf:type owl:NamedIndividual ,
+                gufo:Kind .
+
+
+###  http://example.com#Paralisada
+:Paralisada rdf:type owl:NamedIndividual ,
+                     gufo:Phase .
+
+
+###  http://example.com#Parlamentar
+:Parlamentar rdf:type owl:NamedIndividual ,
+                      gufo:Kind .
+
+
+###  http://example.com#SobOrcamento
+:SobOrcamento rdf:type owl:NamedIndividual ,
+                       gufo:Phase .
+
+
+###  http://example.com#Superfaturada
+:Superfaturada rdf:type owl:NamedIndividual ,
+                        gufo:Phase .
+
+
+###  http://example.com#UF
+:UF rdf:type owl:NamedIndividual ,
+             gufo:SubKind .
+
+
+###  http://example.com#ValorDesbloqueado
+:ValorDesbloqueado rdf:type owl:NamedIndividual ,
+                            gufo:Kind .
+
+
+###  http://example.com#ValorInvestimento
+:ValorInvestimento rdf:type owl:NamedIndividual ,
+                            gufo:Kind .
+
+
+###  http://example.com#Vigencia
+:Vigencia rdf:type owl:NamedIndividual ,
+                   gufo:Kind .
+
+
+###  http://example.com#estaLocalizada
+:estaLocalizada rdf:type owl:NamedIndividual ,
+                         gufo:MaterialRelationshipType .
+
+
+###  http://example.com#financia
+:financia rdf:type owl:NamedIndividual ,
+                   gufo:MaterialRelationshipType .
+
+
+###  http://example.com#gerencia
+:gerencia rdf:type owl:NamedIndividual ,
+                   gufo:MaterialRelationshipType .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+:Abandonada rdfs:label "Abandonada"@en .
+
+
+:Atrasada rdfs:label "Atrasada"@en .
+
+
+:CausaDaParalisacao rdfs:label "Causa da Paralisacao"@en .
+
+
+:Concluida rdfs:label "Concluida"@en .
+
+
+:DataDaParalisacao rdfs:label "Data da Paralisacao"@en .
+
+
+:EmAndamento rdfs:label "Em Andamento"@en .
+
+
+:Empreendimento rdfs:label "Empreendimento"@en .
+
+
+:ExecucaoFinanceira rdfs:label "Execucao Financeira"@en .
+
+
+:ExecucaoFisica rdfs:label "Execucao Fisica"@en .
+
+
+:Fim rdfs:label "Fim"@en .
+
+
+:Gestao rdfs:label "Gestao"@en .
+
+
+:Inicio rdfs:label "Inicio"@en .
+
+
+:Localizacao rdfs:label "Localizacao"@en .
+
+
+:Municipio rdfs:label "Municipio"@en .
+
+
+:Obra rdfs:label "Obra"@en .
+
+
+:Orgao rdfs:label "Orgao"@en .
+
+
+:Paralisada rdfs:label "Paralisada"@en .
+
+
+:Parlamentar rdfs:label "Parlamentar"@en .
+
+
+:SobOrcamento rdfs:label "Sob Orcamento"@en .
+
+
+:Superfaturada rdfs:label "Superfaturada"@en .
+
+
+:UF rdfs:label "UF"@en .
+
+
+:ValorDesbloqueado rdfs:label "Valor Desbloqueado"@en .
+
+
+:ValorInvestimento rdfs:label "Valor investimento"@en .
+
+
+:Vigencia rdfs:label "Vigencia"@en .
+
+
+:estaLocalizada rdfs:label "estaLocalizada"@en .
+
+
+:financia rdfs:label "financia"@en .
+
+
+:gerencia rdfs:label "gerencia"@en .
+
+
+###  Generated by the OWL API (version 4.5.25.2023-02-15T19:15:49Z) https://github.com/owlcs/owlapi
